@@ -3,14 +3,17 @@
 
 version: v2
 name: claude-agent-sdk-container
+
+build:
+  method: docker
+  context: ./
+  dockerfile: ./Dockerfile
+
 services:
-  web:
+  - name: web
     type: web
-    run:
-      command: ./docker-entrypoint.sh
-    ports:
-      - port: 8080
-        protocol: http
+    run: ./docker-entrypoint.sh
+    port: 8080
     healthCheck:
       enabled: true
       httpPath: /health
@@ -20,28 +23,19 @@ services:
       successThreshold: 1
       failureThreshold: 3
     env:
-      - name: PORT
-        value: '8080'
+      PORT: '8080'
       # Required: Anthropic API Key
-      - name: ANTHROPIC_API_KEY
-        value: '${ANTHROPIC_API_KEY}'
+      ANTHROPIC_API_KEY: '${ANTHROPIC_API_KEY}'
       # Optional: API Key for REST endpoint protection
-      - name: CLAUDE_AGENT_SDK_CONTAINER_API_KEY
-        value: '${CLAUDE_AGENT_SDK_CONTAINER_API_KEY}'
+      CLAUDE_AGENT_SDK_CONTAINER_API_KEY: '${CLAUDE_AGENT_SDK_CONTAINER_API_KEY}'
       # Required: GitHub OAuth Configuration
-      - name: GITHUB_CLIENT_ID
-        value: '${GITHUB_CLIENT_ID}'
-      - name: GITHUB_CLIENT_SECRET
-        value: '${GITHUB_CLIENT_SECRET}'
+      GITHUB_CLIENT_ID: '${GITHUB_CLIENT_ID}'
+      GITHUB_CLIENT_SECRET: '${GITHUB_CLIENT_SECRET}'
       # Required: GitHub Access Control (at least one must be set)
-      - name: ALLOWED_GITHUB_USERS
-        value: '${ALLOWED_GITHUB_USERS}'
+      ALLOWED_GITHUB_USERS: '${ALLOWED_GITHUB_USERS}'
       # Optional: GitHub Organization (alternative to ALLOWED_GITHUB_USERS)
-      - name: ALLOWED_GITHUB_ORG
-        value: '${ALLOWED_GITHUB_ORG}'
+      ALLOWED_GITHUB_ORG: '${ALLOWED_GITHUB_ORG}'
       # Optional: JWT Session Secret (auto-generated if not provided)
-      - name: SESSION_SECRET
-        value: '${SESSION_SECRET}'
+      SESSION_SECRET: '${SESSION_SECRET}'
       # Optional: Allow local development (not recommended for production)
-      - name: ALLOW_LOCAL
-        value: 'false'
+      ALLOW_LOCAL: 'false'
