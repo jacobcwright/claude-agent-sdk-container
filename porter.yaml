@@ -2,7 +2,7 @@
 # See: https://docs.porter.run/deploy/configuration-as-code
 
 version: v2
-name: claude-agent-sdk-container
+name: claude-sdk-container
 
 build:
   method: docker
