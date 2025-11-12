@@ -37,5 +37,5 @@ services:
       ALLOWED_GITHUB_ORG: '${ALLOWED_GITHUB_ORG}'
       # Optional: JWT Session Secret (auto-generated if not provided)
       SESSION_SECRET: '${SESSION_SECRET}'
-      # Optional: Allow local development (not recommended for production)
-      ALLOW_LOCAL: 'false'
+      # Required for Porter/Kubernetes: Bypass Docker check (container runs in K8s, not Docker directly)
+      ALLOW_LOCAL: 'true'
